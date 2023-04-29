@@ -107,9 +107,11 @@ Use * or + to connect more than one condition.
                 st_calc.add_ref(ref=image_ref)
 
         if estimator_name=='s_mean_iso':
-            func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis_iso']
+            #JEC func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis_iso']
+            func_s = lambda x: st_calc.scattering_coef(x)['for_synthesis_iso']
         if estimator_name=='s_mean':
-            func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis']
+            #JEC func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis']
+            func_s = lambda x: st_calc.scattering_coef(x)['for_synthesis']
         if 's_cov_func' in estimator_name:
             def func_s(image):
                 s_cov_set = st_calc.scattering_cov(
