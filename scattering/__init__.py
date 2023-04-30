@@ -151,7 +151,7 @@ Use * or + to connect more than one condition.
             func_s = lambda x: st_calc.scattering_cov(
                 x, use_ref=True, if_large_batch=if_large_batch, C11_criteria=C11_criteria, normalization=normalization, pseudo_coef=pseudo_coef,)['for_synthesis']
 
-        if estimator_name = 's_mean_cov': #JEC
+        if estimator_name=='s_mean_cov': #JEC
             def func_s(image):
                 res1= st_calc.scattering_coef(image)['for_synthesis']
                 res2= st_calc.scattering_cov(
