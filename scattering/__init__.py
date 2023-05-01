@@ -106,10 +106,10 @@ Use * or + to connect more than one condition.
             else:
                 st_calc.add_ref(ref=image_ref)
 
-        if  estimator_name=='s21': #JEC
+        if  estimator_name=='s_21': #JEC
             mask = torch.ones(J, J)
             func_s = lambda x: st_calc.scattering_coef(x)['s21'][:,mask.triu()==1]
-        if  estimator_name=='s22': #JEC
+        if  estimator_name=='s_22': #JEC
             mask = torch.ones(J, J)
             func_s = lambda x: st_calc.scattering_coef(x)['s22'][:,mask.triu()==1]
 
