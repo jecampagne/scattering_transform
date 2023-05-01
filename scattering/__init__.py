@@ -81,6 +81,7 @@ Use * or + to connect more than one condition.
         J = int(np.log2(min(M,N))) - 1
     
     # define calculator and estimator function
+    print("estimator_name =",estimator_name)
     if 's' in estimator_name:
         print("JEC: s in estimator")
         st_calc = Scattering2d(M, N, J, L, device, wavelets, l_oversampling=l_oversampling, frequency_factor=frequency_factor)
