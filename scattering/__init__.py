@@ -82,6 +82,7 @@ Use * or + to connect more than one condition.
     
     # define calculator and estimator function
     if 's' in estimator_name:
+        print("JEC: s in estimator")
         st_calc = Scattering2d(M, N, J, L, device, wavelets, l_oversampling=l_oversampling, frequency_factor=frequency_factor)
         if mode=='image':
             if '2fields' not in estimator_name: 
@@ -107,8 +108,10 @@ Use * or + to connect more than one condition.
                 st_calc.add_ref(ref=image_ref)
 
         if  estimator_name=='s_21': #JEC
+            print("JEC: estimator_name = s_21")
             mask = torch.ones(J, J)
             func_s = lambda x: st_calc.scattering_coef(x)['s21'][:,mask.triu()==1]
+
         if  estimator_name=='s_22': #JEC
             mask = torch.ones(J, J)
             func_s = lambda x: st_calc.scattering_coef(x)['s22'][:,mask.triu()==1]
