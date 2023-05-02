@@ -115,7 +115,7 @@ Use * or + to connect more than one condition.
             func_s = lambda x: st_calc.scattering_coef(x)['for_synthesis']
         if 's_mean_func' in estimator_name: #JEC
             def func_s(image):
-                s_mean_set = st_calc.scattering_coef(image)['for_synthesis_iso']
+                s_mean_set = st_calc.scattering_coef(image)
                 return s_cov_func(s_mean_set, s_cov_func_params) # use s_cov_func/param although this is not covariance
 
         if 's_cov_func' in estimator_name:
