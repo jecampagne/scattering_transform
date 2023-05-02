@@ -113,6 +113,11 @@ Use * or + to connect more than one condition.
         if estimator_name=='s_mean':
             #JEC func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis']
             func_s = lambda x: st_calc.scattering_coef(x)['for_synthesis']
+        if 's_mean_func' in estimator_name:
+            def func_s(image):
+                s_mean_set = st_calc.scattering_coef(image)['for_synthesis_iso']
+                return(s_mean_set, [])
+
         if 's_cov_func' in estimator_name:
             def func_s(image):
                 s_cov_set = st_calc.scattering_cov(
