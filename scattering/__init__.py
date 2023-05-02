@@ -81,7 +81,6 @@ Use * or + to connect more than one condition.
         J = int(np.log2(min(M,N))) - 1
     
     # define calculator and estimator function
-    print("estimator_name =",estimator_name)
     if 's' in estimator_name:
         print("JEC: s in estimator")
         st_calc = Scattering2d(M, N, J, L, device, wavelets, l_oversampling=l_oversampling, frequency_factor=frequency_factor)
@@ -107,15 +106,6 @@ Use * or + to connect more than one condition.
                 else: st_calc.add_synthesis_P11(temp, 'iso' in estimator_name, C11_criteria)
             else:
                 st_calc.add_ref(ref=image_ref)
-
-        if  estimator_name=='s_21': #JEC
-            print("JEC: estimator_name = s_21")
-            mask = torch.ones(J, J)
-            func_s = lambda x: st_calc.scattering_coef(x)['s21'][:,mask.triu()==1]
-
-        if  estimator_name=='s_22': #JEC
-            mask = torch.ones(J, J)
-            func_s = lambda x: st_calc.scattering_coef(x)['s22'][:,mask.triu()==1]
 
         if estimator_name=='s_mean_iso':
             #JEC func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis_iso']
