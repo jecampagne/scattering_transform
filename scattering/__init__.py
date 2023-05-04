@@ -32,6 +32,7 @@ def synthesis(
     target_full=None,
     ps=False, ps_bins=None, ps_bin_type='log',
     bi=False, bispectrum_bins=None, bispectrum_bin_type='log',
+    tri=False, trispectrum_bins=None, trispectrum_bin_type='log',
     phi4=False, phi4_j=False, hist=False, hist_j=False,
     ensemble=False,
     N_ensemble=1,
@@ -206,7 +207,17 @@ Use * or + to connect more than one condition.
             bi = bi_calc.forward(image)
             ps, _ = get_power_spectrum(image, bins=bispectrum_bins, bin_type=bispectrum_bin_type)
             return torch.cat(((image.mean((-2,-1))/image.std((-2,-1)))[:,None], ps, bi), axis=-1)
-        
+    if tri:
+        if trispectrum_bins is None:
+            trispectrum_bins = J-1
+        tri_calc = Trispectrum_Calculator(M, N, bins=trispectrum_bins, bin_type=trispectrum_bin_type, device=device)
+        def func_tri(image):
+            tri = tri_calc.forward(image)
+            bi = bi_calc.forward(image)
+            ps, _ = get_power_spectrum(image, bins=trispectrum_bins, bin_type=trispectrum_bin_type)
+            return torch.cat(((image.mean((-2,-1))/image.std((-2,-1)))[:,None], ps, bi, tri), axis=-1)
+         
+    
     def func(image):
         coef_list = []
         if estimator_name!='':
@@ -215,6 +226,8 @@ Use * or + to connect more than one condition.
             coef_list.append(func_ps(image))
         if bi:
             coef_list.append(func_bi(image))
+        if tri:
+            coef_list.append(func_tri(image))
         if phi4:
             coef_list.append(func_phi4(image))
         if phi4_j:
