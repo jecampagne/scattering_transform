@@ -210,6 +210,7 @@ Use * or + to connect more than one condition.
     if tri:
         if trispectrum_bins is None:
             trispectrum_bins = J-1
+        bi_calc = Bispectrum_Calculator(M, N, bins=bispectrum_bins, bin_type=bispectrum_bin_type, device=device)
         tri_calc = Trispectrum_Calculator(M, N, bins=trispectrum_bins, bin_type=trispectrum_bin_type, device=device)
         def func_tri(image):
             tri = tri_calc.forward(image)
