@@ -114,6 +114,17 @@ Use * or + to connect more than one condition.
         if estimator_name=='s_mean':
             #JEC func_s = lambda x: st_calc.scattering_coef(x, flatten=True)['for_synthesis']
             func_s = lambda x: st_calc.scattering_coef(x)['for_synthesis']
+
+        if estimator_name=='s_mean_extend':
+            def func_s(image):
+                N_image = image.shape[0]
+                mean_std = (image.mean((-2,-1))/image.std((-2,-1)))[:,None]
+                s_mean_set = st_calc.scattering_coef(image)
+                p00 = s_mean_set['P00'].reshape((N_image, -1)).log()
+                coeffs = s_mean_set['for_synthesis']
+                return torch.cat((mean_std,p00,coeffs),dim=-1)
+
+
         if 's_mean_func' in estimator_name: #JEC
             def func_s(image):
                 s_mean_set = st_calc.scattering_coef(image)
