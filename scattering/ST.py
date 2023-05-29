@@ -1971,7 +1971,7 @@ class AlphaScattering2d_cov(object):
             fftpsi = hatpsi[...,0] + hatpsi[...,1]* 1.0j # numpy
             hatphi = torch.load(self.path+'/morlet_lp_N'+str(N)+'_J'+str(J)+'_L'+str(L)+'.pt').numpy()  # (M,N,2) numpy
         else:
-            Sihao_filters = FiltersSet(M=N, N=N, J=J, L=L).generate_morlet()
+            Sihao_filters = FiltersSet(M=N, N=N, J=J, L=L).generate_wavelets(wavelets='morlet')
             hatpsi_ = Sihao_filters['psi'] # (J,L,M,N)
             hatpsi_ = torch.cat((hatpsi_[...,None], hatpsi_[...,None]*0), dim=-1) # (J,L,M,N,2) torch
             hatpsi = torch.cat((hatpsi_, torch.flip(hatpsi_, (2,3))), dim=1).numpy() # (J,L2,M,N,2) numpy
