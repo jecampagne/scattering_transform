@@ -38,6 +38,7 @@ def synthesis(
     N_ensemble=1,
     reference_P00=None,
     pseudo_coef=1,
+    A_prime=1 # for AlphaScattering2d_cov {[1], 4}
 ):
     '''
 the estimator_name can be 's_mean', 's_mean_iso', 's_cov', 's_cov_iso', 'alpha_cov', 
@@ -200,7 +201,7 @@ Use * or + to connect more than one condition.
                         (result['index_for_synthesis'][0]!=15)* (result['index_for_synthesis'][0]!=19)
                 return result['for_synthesis'][:,select]
     if 'alpha_cov' in estimator_name:
-        aw_calc = AlphaScattering2d_cov(M, N, J, L, wavelets=wavelets, device=device)
+        aw_calc = AlphaScattering2d_cov(M, N, J, L, wavelets=wavelets, device=device, A_prime=A_prime)
         func_s = lambda x: aw_calc.forward(x)
     
     # power spectrum
