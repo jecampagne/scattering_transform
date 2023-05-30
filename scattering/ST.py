@@ -2316,6 +2316,7 @@ class AlphaScattering2d_cov(object):
             Sout = Sout.view(nb, -1, M*N)[..., self.indices]
             Sout = Sout.view(nb, -1)
             Sout = torch.cat((Sout, input.mean((-2,-1)).view(nb,1), input.std((-2,-1)).view(nb,1)), dim=1)*1e-4
+            
         return Sout
 
     def __call__(self, input):
