@@ -202,8 +202,14 @@ Use * or + to connect more than one condition.
                 return result['for_synthesis'][:,select]
     if 'alpha_cov' in estimator_name:
         aw_calc = AlphaScattering2d_cov(M, N, J, L, wavelets=wavelets, device=device, A_prime=A_prime)
-        func_s = lambda x: aw_calc.forward(x)
-    
+        st_calc = Scattering2d(M, N, J, L, device, wavelets, l_oversampling=l_oversampling, frequency_factor=frequency_factor)
+        #func_s = lambda x: aw_calc.forward(x)
+        def func_s(x): #JEC add p00 (nb. sout include mean and std of x)
+            s_mean_set = st_calc.scattering_coef(x)
+            p00 = s_mean_set['P00'].reshape((1, -1)).log()
+            sout = aw_calc.forward(x)
+            return torch.cat( (sout, p00), dim = -1)
+
     # power spectrum
     if ps_bins is None:
         ps_bins = J-1
